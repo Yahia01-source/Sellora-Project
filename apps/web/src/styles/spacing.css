@@ -1,0 +1,492 @@
+
+/*
+ * spacing.css
+ * Sellora Spacing System — CSS Custom Properties & Utility Classes
+ *
+ * HOW TO USE:
+ * @import './spacing.css'; in your globals.css (after @import "tailwindcss")
+ *
+ * WHAT THIS FILE CONTAINS:
+ * 1. CSS custom properties for ALL spacing tokens (primitives + semantics)
+ * 2. Container utility classes
+ * 3. Spacing utility classes
+ * 4. Grid layout classes
+ * 5. Responsive overrides at each breakpoint
+ *
+ * NAMING:
+ * --space-{value}   → primitive token (--space-16 = 1rem)
+ * --{context}-{role} → semantic token (--card-padding = 1.5rem)
+ */
+ 
+@layer base {
+  :root {
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       PRIMITIVE SPACING SCALE
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    /* MICRO TIER */
+    --space-0:    0px;
+    --space-2:    0.125rem;  /*  2px */
+    --space-4:    0.25rem;   /*  4px */
+    --space-6:    0.375rem;  /*  6px */
+ 
+    /* MACRO TIER — 8px grid */
+    --space-8:    0.5rem;    /*  8px  ← BASE MACRO UNIT */
+    --space-12:   0.75rem;   /* 12px */
+    --space-16:   1rem;      /* 16px ← MOST USED */
+    --space-20:   1.25rem;   /* 20px */
+    --space-24:   1.5rem;    /* 24px ← PRIMARY LAYOUT UNIT */
+    --space-28:   1.75rem;   /* 28px */
+    --space-32:   2rem;      /* 32px */
+    --space-40:   2.5rem;    /* 40px */
+    --space-48:   3rem;      /* 48px */
+    --space-56:   3.5rem;    /* 56px */
+    --space-64:   4rem;      /* 64px */
+    --space-72:   4.5rem;    /* 72px */
+    --space-80:   5rem;      /* 80px */
+    --space-96:   6rem;      /* 96px */
+    --space-112:  7rem;      /* 112px */
+    --space-128:  8rem;      /* 128px */
+    --space-144:  9rem;      /* 144px */
+    --space-160:  10rem;     /* 160px */
+    --space-192:  12rem;     /* 192px */
+    --space-224:  14rem;     /* 224px */
+    --space-256:  16rem;     /* 256px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       SEMANTIC ALIASES
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --space-xs:   var(--space-8);     /*  8px */
+    --space-sm:   var(--space-12);    /* 12px */
+    --space-md:   var(--space-16);    /* 16px */
+    --space-lg:   var(--space-24);    /* 24px */
+    --space-xl:   var(--space-32);    /* 32px */
+    --space-2xl:  var(--space-48);    /* 48px */
+    --space-3xl:  var(--space-64);    /* 64px */
+    --space-4xl:  var(--space-96);    /* 96px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       CONTAINER SPACING (DESKTOP DEFAULT)
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --container-padding-x:   var(--space-32);   /* 32px */
+    --container-padding-y:   var(--space-32);   /* 32px */
+    --container-max-width:   1440px;
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       CARD CONTEXT TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --card-padding:           var(--space-24);   /* 24px */
+    --card-padding-compact:   var(--space-16);   /* 16px */
+    --card-padding-large:     var(--space-32);   /* 32px */
+    --card-header-to-body:    var(--space-16);   /* 16px */
+    --card-body-to-footer:    var(--space-16);   /* 16px */
+    --card-item-gap:          var(--space-12);   /* 12px */
+    --card-title-to-subtitle: var(--space-4);    /*  4px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       SECTION SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --section-gap:               var(--space-32);  /* 32px */
+    --section-heading-top:       var(--space-48);  /* 48px */
+    --section-heading-bottom:    var(--space-16);  /* 16px */
+    --page-header-bottom:        var(--space-24);  /* 24px */
+    --content-area-top:          var(--space-24);  /* 24px */
+    --content-area-bottom:       var(--space-40);  /* 40px */
+    --between-cards:             var(--space-16);  /* 16px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       SIDEBAR SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --sidebar-padding-x:         var(--space-12);   /* 12px */
+    --sidebar-brand-padding-y:   var(--space-16);   /* 16px */
+    --sidebar-brand-padding-x:   var(--space-16);   /* 16px */
+    --sidebar-nav-item-py:       var(--space-8);    /*  8px */
+    --sidebar-nav-item-px:       var(--space-12);   /* 12px */
+    --sidebar-nav-icon-gap:      10px;              /* 10px (exception) */
+    --sidebar-nav-item-gap:      var(--space-2);    /*  2px */
+    --sidebar-section-gap:       var(--space-16);   /* 16px */
+    --sidebar-section-label-top: var(--space-20);   /* 20px */
+    --sidebar-sub-indent:        var(--space-28);   /* 28px */
+    --sidebar-footer-padding:    var(--space-12);   /* 12px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       NAVIGATION SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --topnav-height:             var(--space-56);  /* 56px */
+    --topnav-padding-x:          var(--space-24);  /* 24px */
+    --topnav-padding-y:          var(--space-12);  /* 12px */
+    --tab-padding-y:             var(--space-8);   /*  8px */
+    --tab-padding-x:             var(--space-16);  /* 16px */
+    --breadcrumb-gap:            var(--space-4);   /*  4px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       TABLE SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --table-header-py:           10px;             /* 10px (tested exception) */
+    --table-header-px:           var(--space-16);  /* 16px */
+    --table-row-py:              var(--space-12);  /* 12px */
+    --table-row-px:              var(--space-16);  /* 16px */
+    --table-cell-stack-gap:      var(--space-2);   /*  2px */
+    --table-cell-inline-gap:     var(--space-8);   /*  8px */
+    --table-footer-py:           var(--space-12);  /* 12px */
+    --table-footer-px:           var(--space-16);  /* 16px */
+    --table-toolbar-py:          var(--space-12);  /* 12px */
+    --table-toolbar-px:          var(--space-16);  /* 16px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       FORM SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --form-field-gap-y:          var(--space-20);  /* 20px */
+    --form-field-gap-x:          var(--space-16);  /* 16px */
+    --form-label-to-input:       var(--space-6);   /*  6px */
+    --form-input-to-helper:      var(--space-6);   /*  6px */
+    --form-section-header-gap:   var(--space-16);  /* 16px */
+    --form-between-sections:     var(--space-32);  /* 32px */
+    --form-action-gap:           var(--space-8);   /*  8px */
+    --form-field-to-actions:     var(--space-24);  /* 24px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       MODAL SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --modal-header-px:           var(--space-24);  /* 24px */
+    --modal-header-py:           var(--space-20);  /* 20px */
+    --modal-body-px:             var(--space-24);  /* 24px */
+    --modal-body-py:             var(--space-20);  /* 20px */
+    --modal-footer-px:           var(--space-24);  /* 24px */
+    --modal-footer-py:           var(--space-16);  /* 16px */
+    --modal-body-item-gap:       var(--space-16);  /* 16px */
+    --modal-footer-btn-gap:      var(--space-8);   /*  8px */
+    --modal-viewport-margin:     var(--space-32);  /* 32px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       BUTTON SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --btn-py-lg:     var(--space-12);  /* 12px */
+    --btn-px-lg:     var(--space-20);  /* 20px */
+    --btn-h-lg:      44px;
+ 
+    --btn-py:        var(--space-8);   /*  8px */
+    --btn-px:        var(--space-16);  /* 16px */
+    --btn-h:         36px;
+ 
+    --btn-py-sm:     var(--space-4);   /*  4px */
+    --btn-px-sm:     var(--space-12);  /* 12px */
+    --btn-h-sm:      28px;
+ 
+    --btn-icon-gap:  var(--space-8);   /*  8px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       INPUT SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --input-py:      var(--space-8);   /*  8px */
+    --input-px:      var(--space-12);  /* 12px */
+    --input-h:       36px;
+ 
+    --input-py-lg:   var(--space-12);  /* 12px */
+    --input-px-lg:   var(--space-16);  /* 16px */
+    --input-h-lg:    44px;
+ 
+    --input-py-sm:   var(--space-4);   /*  4px */
+    --input-px-sm:   var(--space-8);   /*  8px */
+    --input-h-sm:    28px;
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       DROPDOWN SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --dropdown-container-py:     var(--space-4);   /*  4px */
+    --dropdown-item-py:          var(--space-8);   /*  8px */
+    --dropdown-item-px:          var(--space-12);  /* 12px */
+    --dropdown-item-icon-gap:    var(--space-8);   /*  8px */
+    --dropdown-trigger-offset:   var(--space-4);   /*  4px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       ICON SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --icon-to-text:        var(--space-8);   /*  8px */
+    --icon-to-text-tight:  var(--space-6);   /*  6px */
+    --icon-to-icon:        var(--space-8);   /*  8px */
+    --icon-touch-padding:  var(--space-8);   /*  8px */
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       CHART SPACING TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --chart-container-padding:     var(--space-16);  /* 16px */
+    --chart-container-padding-top: var(--space-24);  /* 24px */
+    --chart-title-to-chart:        var(--space-16);  /* 16px */
+    --chart-to-legend:             var(--space-16);  /* 16px */
+    --chart-legend-item-gap:       var(--space-16);  /* 16px */
+    --chart-legend-swatch-gap:     var(--space-6);   /*  6px */
+    --chart-tooltip-py:            var(--space-8);   /*  8px */
+    --chart-tooltip-px:            var(--space-12);  /* 12px */
+    --chart-min-height:            200px;
+    --chart-default-height:        240px;
+ 
+    /* ══════════════════════════════════════════════════════════════════════════
+       GRID SYSTEM TOKENS
+       ══════════════════════════════════════════════════════════════════════════ */
+ 
+    --grid-columns:  12;
+    --grid-gutter:   var(--space-16);  /* 16px */
+    --grid-margin:   var(--space-32);  /* 32px */
+ 
+  } /* :root */
+ 
+  /* ══════════════════════════════════════════════════════════════════════════
+     RESPONSIVE OVERRIDES
+     ══════════════════════════════════════════════════════════════════════════ */
+ 
+  /* ── TABLET (768px - 1023px) ──────────────────────────────────────────── */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+      --container-padding-x:   var(--space-24);   /* 24px */
+      --container-padding-y:   var(--space-24);   /* 24px */
+      --card-padding:          var(--space-20);   /* 20px */
+      --section-gap:           var(--space-24);   /* 24px */
+      --grid-gutter:           var(--space-12);   /* 12px */
+      --grid-margin:           var(--space-24);   /* 24px */
+      --form-field-gap-y:      var(--space-20);   /* 20px */
+    }
+  }
+ 
+  /* ── MOBILE (< 768px) ─────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    :root {
+      --container-padding-x:   var(--space-16);   /* 16px */
+      --container-padding-y:   var(--space-16);   /* 16px */
+      --card-padding:          var(--space-16);   /* 16px */
+      --section-gap:           var(--space-20);   /* 20px */
+      --grid-gutter:           var(--space-12);   /* 12px */
+      --grid-margin:           var(--space-16);   /* 16px */
+      --form-field-gap-y:      var(--space-16);   /* 16px */
+      --table-row-px:          var(--space-8);    /*  8px */
+      --modal-header-px:       var(--space-16);   /* 16px */
+      --modal-body-px:         var(--space-16);   /* 16px */
+      --modal-footer-px:       var(--space-16);   /* 16px */
+    }
+  }
+ 
+} /* end @layer base */
+ 
+ 
+/* ══════════════════════════════════════════════════════════════════════════════
+   SPACING UTILITY CLASSES
+   ══════════════════════════════════════════════════════════════════════════════ */
+ 
+@layer utilities {
+ 
+  /* ── CONTAINER ───────────────────────────────────────────────────────────── */
+ 
+  /**
+   * .sellora-container — The main page content container.
+   * Applies responsive padding and max-width automatically.
+   */
+  .sellora-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin-inline: auto;
+    padding-inline: var(--container-padding-x);
+    padding-block:  var(--container-padding-y);
+  }
+ 
+  /**
+   * .content-area — Inner content zone (inside sidebar layout).
+   * Inherits from sellora-container but used after sidebar offset.
+   */
+  .content-area {
+    width: 100%;
+    padding-inline: var(--container-padding-x);
+    padding-block-start: var(--content-area-top);
+    padding-block-end:   var(--content-area-bottom);
+  }
+ 
+  /* ── CARD ────────────────────────────────────────────────────────────────── */
+ 
+  .card-spacing {
+    padding: var(--card-padding);
+  }
+ 
+  .card-spacing-compact {
+    padding: var(--card-padding-compact);
+  }
+ 
+  .card-spacing-large {
+    padding: var(--card-padding-large);
+  }
+ 
+  /* ── SECTION ─────────────────────────────────────────────────────────────── */
+ 
+  .section-gap {
+    margin-block-start: var(--section-gap);
+  }
+ 
+  .page-header-gap {
+    margin-block-end: var(--page-header-bottom);
+  }
+ 
+  /* ── TABLE ───────────────────────────────────────────────────────────────── */
+ 
+  .table-header-cell {
+    padding-block:  var(--table-header-py);
+    padding-inline: var(--table-header-px);
+  }
+ 
+  .table-body-cell {
+    padding-block:  var(--table-row-py);
+    padding-inline: var(--table-row-px);
+  }
+ 
+  .table-footer-area {
+    padding-block:  var(--table-footer-py);
+    padding-inline: var(--table-footer-px);
+  }
+ 
+  .table-toolbar-area {
+    padding-block:  var(--table-toolbar-py);
+    padding-inline: var(--table-toolbar-px);
+  }
+ 
+  /* ── FORM ────────────────────────────────────────────────────────────────── */
+ 
+  .form-field-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-label-to-input);
+  }
+ 
+  .form-fields-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-field-gap-y);
+  }
+ 
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--form-field-gap-x);
+  }
+ 
+  /* ── GRID LAYOUT ─────────────────────────────────────────────────────────── */
+ 
+  .grid-default {
+    display: grid;
+    gap: var(--grid-gutter);
+  }
+ 
+  .grid-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+ 
+  /* Responsive grid (auto-fills columns) */
+  .grid-auto-sm {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--grid-gutter);
+  }
+ 
+  .grid-auto-md {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--grid-gutter);
+  }
+ 
+  /* KPI stats row — 4 columns desktop, 2 tablet, 1 mobile */
+  .grid-kpi {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+  }
+ 
+  @media (max-width: 1023px) {
+    .grid-kpi { grid-template-columns: repeat(2, 1fr); }
+    .grid-3   { grid-template-columns: repeat(2, 1fr); }
+    .grid-4   { grid-template-columns: repeat(2, 1fr); }
+  }
+ 
+  @media (max-width: 767px) {
+    .grid-kpi { grid-template-columns: repeat(1, 1fr); }
+    .grid-2   { grid-template-columns: repeat(1, 1fr); }
+    .grid-3   { grid-template-columns: repeat(1, 1fr); }
+    .grid-4   { grid-template-columns: repeat(1, 1fr); }
+  }
+ 
+  /* ── FLEX GAP UTILITIES ──────────────────────────────────────────────────── */
+ 
+  .flex-gap-tight      { gap: var(--space-4);  }   /*  4px */
+  .flex-gap-snug       { gap: var(--space-6);  }   /*  6px */
+  .flex-gap-compact    { gap: var(--space-8);  }   /*  8px */
+  .flex-gap-standard   { gap: var(--space-12); }   /* 12px */
+  .flex-gap-default    { gap: var(--space-16); }   /* 16px */
+  .flex-gap-comfortable { gap: var(--space-20); }  /* 20px */
+  .flex-gap-spacious   { gap: var(--space-24); }   /* 24px */
+  .flex-gap-loose      { gap: var(--space-32); }   /* 32px */
+ 
+  /* ── SIDEBAR SPACING ─────────────────────────────────────────────────────── */
+ 
+  .sidebar-brand {
+    padding-block:  var(--sidebar-brand-padding-y);
+    padding-inline: var(--sidebar-brand-padding-x);
+  }
+ 
+  .sidebar-nav-item {
+    padding-block:  var(--sidebar-nav-item-py);
+    padding-inline: var(--sidebar-nav-item-px);
+    gap: var(--sidebar-nav-icon-gap);
+  }
+ 
+  /* ── CHART ───────────────────────────────────────────────────────────────── */
+ 
+  .chart-container {
+    padding:     var(--chart-container-padding);
+    padding-top: var(--chart-container-padding-top);
+    min-height:  var(--chart-min-height);
+  }
+ 
+  /* ── DROPDOWN ────────────────────────────────────────────────────────────── */
+ 
+  .dropdown-item {
+    padding-block:  var(--dropdown-item-py);
+    padding-inline: var(--dropdown-item-px);
+    gap: var(--dropdown-item-icon-gap);
+  }
+ 
+  /* ── MODAL ───────────────────────────────────────────────────────────────── */
+ 
+  .modal-header {
+    padding-block:  var(--modal-header-py);
+    padding-inline: var(--modal-header-px);
+  }
+ 
+  .modal-body {
+    padding-block:  var(--modal-body-py);
+    padding-inline: var(--modal-body-px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--modal-body-item-gap);
+  }
+ 
+  .modal-footer {
+    padding-block:  var(--modal-footer-py);
+    padding-inline: var(--modal-footer-px);
+    display: flex;
+    align-items: center;
+    gap: var(--modal-footer-btn-gap);
+  }
+ 
+} /* end @layer utilities */
+ 

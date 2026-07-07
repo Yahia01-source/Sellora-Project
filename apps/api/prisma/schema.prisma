@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  SUPER_ADMIN
+  STORE_OWNER
+  STORE_STAFF
+  CUSTOMER
+  DRIVER
+}
+
+enum StoreStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum StorePlan {
+  FREE
+  STARTER
+  GROWTH
+  ENTERPRISE
+}
+
+// ─── User ─────────────────────────────────────────────────────────────────────
+
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  passwordHash    String
+  firstName       String
+  lastName        String
+  role            UserRole @default(CUSTOMER)
+  isEmailVerified Boolean  @default(false)
+  isActive        Boolean  @default(true)
+
+  storeId String?
+  store   Store?  @relation("StoreUsers", fields: [storeId], references: [id], onDelete: SetNull)
+
+  ownedStores   Store[]        @relation("StoreOwner")
+  refreshTokens RefreshToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([role])
+  @@map("users")
+}
+
+// ─── RefreshToken ─────────────────────────────────────────────────────────────
+
+model RefreshToken {
+  id                  String   @id @default(uuid())
+  tokenHash           String   @unique
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked             Boolean  @default(false)
+  replacedByTokenHash String?
+  userAgent           String?
+  ipAddress           String?
+  expiresAt           DateTime
+  createdAt           DateTime @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+// ─── Store ────────────────────────────────────────────────────────────────────
+
+model Store {
+  id           String      @id @default(uuid())
+  name         String
+  slug         String      @unique
+  subdomain    String?     @unique
+  description  String?
+  status       StoreStatus @default(PENDING)
+  plan         StorePlan   @default(FREE)
+  tenantConfig Json
+  customDomain String?     @unique
+
+  ownerId String
+  owner   User   @relation("StoreOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  users   User[] @relation("StoreUsers")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+  @@map("stores")
+}
+
+// ─── Permission ───────────────────────────────────────────────────────────────
+
+model Permission {
+  id          String           @id @default(uuid())
+  action      String           @unique
+  description String
+  roles       RolePermission[]
+  createdAt   DateTime         @default(now())
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  role         UserRole
+  permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([role, permissionId])
+  @@index([role])
+  @@map("role_permissions")
+}

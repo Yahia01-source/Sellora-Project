@@ -1,0 +1,222 @@
+/**
+ * @file components/dashboard/dashboard.types.ts
+ */
+
+// ─── WELCOME ──────────────────────────────────────────────────────────────────
+
+export interface WelcomeData {
+  userName: string;
+  storeName: string;
+  currentDate: string;
+  todayOrders: number;
+  todayRevenue: number;
+  currency: string;
+  pendingActions: number;
+}
+
+// ─── KPI ──────────────────────────────────────────────────────────────────────
+
+export type KpiTone = 'default' | 'success' | 'warning' | 'danger' | 'info';
+export type TrendDirection = 'up' | 'down' | 'neutral';
+export type KpiTrend = TrendDirection;
+
+export interface KpiCardData {
+  id: string;
+  label: string;
+  value: number;
+  displayValue: string;
+  change: number;
+  trend: TrendDirection;
+  trendLabel?: string;
+  tone?: KpiTone;
+  isCurrency?: boolean;
+  currency?: string;
+  sparkline?: number[];
+}
+
+// ─── ORDERS ───────────────────────────────────────────────────────────────────
+
+export type OrderStatus =
+  | 'new'
+  | 'pending'
+  | 'confirmed'
+  | 'processing'
+  | 'out_for_delivery'
+  | 'delivered'
+  | 'returned'
+  | 'cancelled'
+  | 'failed';
+
+export interface RecentOrder {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  status: OrderStatus;
+  totalAmount: number;
+  currency: string;
+  itemCount: number;
+  createdAt: string;
+  city?: string;
+}
+
+// ─── CUSTOMERS ────────────────────────────────────────────────────────────────
+
+export interface RecentCustomer {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  totalOrders: number;
+  totalSpent: number;
+  currency: string;
+  lastOrderAt: string;
+  isNew?: boolean;
+  avatarUrl?: string;
+}
+
+// ─── PRODUCTS ─────────────────────────────────────────────────────────────────
+
+export interface TopProduct {
+  id: string;
+  name: string;
+  sku?: string;
+  imageUrl?: string;
+  unitsSold: number;
+  revenue: number;
+  currency: string;
+  trend: TrendDirection;
+  trendPercent: number;
+  rank: number;
+}
+
+// ─── CITIES ───────────────────────────────────────────────────────────────────
+
+export interface TopCity {
+  id: string;
+  name: string;
+  orderCount: number;
+  revenue: number;
+  currency: string;
+  sharePercent: number;
+}
+
+// ─── ACTIVITY ─────────────────────────────────────────────────────────────────
+
+export type ActivityType =
+  | 'order_placed'
+  | 'order_confirmed'
+  | 'order_delivered'
+  | 'order_returned'
+  | 'order_cancelled'
+  | 'customer_added'
+  | 'payment_received'
+  | 'product_added'
+  | 'product_updated';
+
+export interface ActivityItem {
+  id: string;
+  type: ActivityType;
+  title: string;
+  description?: string;
+  timestamp: string;
+  actor?: string;
+  avatarUrl?: string;
+  href?: string;
+}
+
+// ─── NOTIFICATIONS ────────────────────────────────────────────────────────────
+
+export type NotificationSeverity = 'info' | 'success' | 'warning' | 'danger';
+
+export interface SmartNotification {
+  id: string;
+  severity: NotificationSeverity;
+  title: string;
+  description?: string;
+  action?: {
+    label: string;
+    href: string;
+  };
+  timestamp: string;
+  read: boolean;
+  dismissible?: boolean;
+}
+
+// ─── GOALS ────────────────────────────────────────────────────────────────────
+
+export type GoalStatus = 'on_track' | 'at_risk' | 'behind' | 'achieved' | 'completed';
+
+export interface BusinessGoal {
+  id: string;
+  label: string;
+  current: number;
+  target: number;
+  unit: string;
+  status: GoalStatus;
+  deadline?: string;
+}
+
+// ─── EMPLOYEES ────────────────────────────────────────────────────────────────
+
+export interface EmployeePerformance {
+  id: string;
+  name: string;
+  role: string;
+  ordersHandled: number;
+  deliveryRate: number;
+  avgResponseTime: string;
+  rating: number;
+  avatarUrl?: string;
+}
+
+// ─── CHARTS ───────────────────────────────────────────────────────────────────
+
+export type ChartType = 'line' | 'bar' | 'area' | 'pie' | 'donut';
+
+export interface ChartDataPoint {
+  label: string;
+  value: number;
+  secondaryValue?: number;
+}
+
+export interface ChartConfig {
+  id: string;
+  title: string;
+  description?: string;
+  period?: string;
+  type: ChartType;
+  color?: string;
+  secondaryColor?: string;
+  data: ChartDataPoint[];
+}
+
+// ─── AI INSIGHTS ──────────────────────────────────────────────────────────────
+
+export interface AiInsight {
+  id: string;
+  headline: string;
+  body: string;
+  confidence: number;
+  action?: {
+    label: string;
+    href: string;
+  };
+  generatedAt: string;
+}
+
+// ─── DASHBOARD DATA ───────────────────────────────────────────────────────────
+
+export interface DashboardData {
+  welcome: WelcomeData;
+  kpis: KpiCardData[];
+  recentOrders: RecentOrder[];
+  recentCustomers: RecentCustomer[];
+  topProducts: TopProduct[];
+  topCities: TopCity[];
+  activity: ActivityItem[];
+  notifications: SmartNotification[];
+  goals: BusinessGoal[];
+  employees: EmployeePerformance[];
+  charts: ChartConfig[];
+  aiInsights: AiInsight[];
+}

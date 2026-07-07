@@ -1,0 +1,504 @@
+
+/*
+ * visual-foundation.css
+ * Sellora Visual Foundation — CSS Custom Properties & Utility Classes
+ *
+ * ADD TO globals.css:
+ *   @import './visual-foundation.css';
+ *
+ * CONTAINS:
+ * 1. Border Radius CSS variables
+ * 2. Border CSS variables
+ * 3. Shadow CSS variables
+ * 4. Opacity CSS variables
+ * 5. Blur CSS variables
+ * 6. Focus Ring CSS variables
+ * 7. Motion/Animation CSS variables
+ * 8. Z-Index CSS variables
+ * 9. Keyframe definitions (@keyframes)
+ * 10. Utility classes for all visual tokens
+ */
+ 
+/* ══════════════════════════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES
+   ══════════════════════════════════════════════════════════════════════════════ */
+ 
+@layer base {
+  :root {
+ 
+    /* ── BORDER RADIUS ──────────────────────────────────────────────────────── */
+    --radius-none: 0px;
+    --radius-xs:   0.125rem;  /*  2px */
+    --radius-sm:   0.25rem;   /*  4px */
+    --radius-md:   0.375rem;  /*  6px ← DEFAULT */
+    --radius-lg:   0.5rem;    /*  8px */
+    --radius-xl:   0.75rem;   /* 12px */
+    --radius-2xl:  1rem;      /* 16px */
+    --radius-3xl:  1.5rem;    /* 24px */
+    --radius-full: 9999px;
+ 
+    /* ── BORDER WIDTHS ──────────────────────────────────────────────────────── */
+    --border-0: 0px;
+    --border-1: 1px;
+    --border-2: 2px;
+    --border-4: 4px;
+ 
+    /* ── BORDER COLORS ──────────────────────────────────────────────────────── */
+    --border-default:     #E5E7EB;  /* gray-200 */
+    --border-strong:      #D1D5DB;  /* gray-300 */
+    --border-subtle:      #F3F4F6;  /* gray-100 */
+    --border-hover:       #D1D5DB;  /* gray-300 */
+    --border-active:      #9CA3AF;  /* gray-400 */
+    --border-focus:       #3B82F6;  /* blue-500 */
+    --border-error:       #EF4444;  /* red-500 */
+    --border-error-strong: #DC2626; /* red-600 */
+    --border-success:     #22C55E;  /* green-500 */
+    --border-warning:     #F59E0B;  /* amber-500 */
+    --border-disabled:    #E5E7EB;  /* gray-200 */
+    --border-primary:     #2563EB;  /* blue-600 */
+    --border-transparent: transparent;
+ 
+    /* ── SHADOWS (ELEVATION) ────────────────────────────────────────────────── */
+    --shadow-none:  none;
+    --shadow-xs:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm:    0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+    --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --shadow-2xl:   0 25px 50px -12px rgba(0, 0, 0, 0.20);
+    --shadow-3xl:   0 35px 60px -15px rgba(0, 0, 0, 0.30);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    --shadow-inner-strong: inset 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+ 
+    /* ── COMPONENT SHADOWS ──────────────────────────────────────────────────── */
+    --shadow-card:           var(--shadow-sm);
+    --shadow-card-hover:     var(--shadow-md);
+    --shadow-dropdown:       var(--shadow-lg);
+    --shadow-popover:        var(--shadow-lg);
+    --shadow-sidebar:        var(--shadow-lg);
+    --shadow-modal:          var(--shadow-xl);
+    --shadow-drawer:         var(--shadow-xl);
+    --shadow-toast:          var(--shadow-lg);
+    --shadow-command:        var(--shadow-2xl);
+    --shadow-input:          var(--shadow-inner);
+ 
+    /* ── FOCUS RING SHADOWS ─────────────────────────────────────────────────── */
+    --focus-ring:             0 0 0 2px #FFFFFF, 0 0 0 4px #2563EB;
+    --focus-ring-on-color:    0 0 0 2px rgba(255, 255, 255, 0.40), 0 0 0 4px #2563EB;
+    --focus-ring-on-dark:     0 0 0 2px #1F2937, 0 0 0 4px #60A5FA;
+    --focus-ring-error:       0 0 0 2px #FFFFFF, 0 0 0 4px #EF4444;
+    --focus-ring-warning:     0 0 0 2px #FFFFFF, 0 0 0 4px #F59E0B;
+    --focus-ring-success:     0 0 0 2px #FFFFFF, 0 0 0 4px #22C55E;
+    --focus-ring-inset:       inset 0 0 0 2px #2563EB;
+    --focus-ring-with-inner:  inset 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 0 0 2px #FFFFFF, 0 0 0 4px #2563EB;
+ 
+    /* ── OPACITY ────────────────────────────────────────────────────────────── */
+    --opacity-0:    0;
+    --opacity-5:    0.05;
+    --opacity-10:   0.10;
+    --opacity-20:   0.20;
+    --opacity-30:   0.30;
+    --opacity-40:   0.40;   /* ← DISABLED STATE */
+    --opacity-50:   0.50;   /* ← MODAL BACKDROP */
+    --opacity-60:   0.60;
+    --opacity-70:   0.70;
+    --opacity-80:   0.80;
+    --opacity-90:   0.90;
+    --opacity-100:  1;
+ 
+    /* ── BLUR ───────────────────────────────────────────────────────────────── */
+    --blur-none:  0;
+    --blur-xs:    4px;
+    --blur-sm:    8px;
+    --blur-md:    12px;
+    --blur-lg:    16px;
+    --blur-xl:    24px;
+    --blur-2xl:   40px;
+ 
+    /* ── MOTION: DURATION ───────────────────────────────────────────────────── */
+    --duration-instant:   0ms;
+    --duration-fast:      100ms;
+    --duration-default:   150ms;
+    --duration-normal:    200ms;
+    --duration-slow:      300ms;
+    --duration-very-slow: 400ms;
+    --duration-extra-slow: 600ms;
+ 
+    /* ── MOTION: EASING ─────────────────────────────────────────────────────── */
+    --ease-linear:  linear;
+    --ease-out:     cubic-bezier(0, 0, 0.2, 1);    /* ← MOST USED */
+    --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+    --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-sharp:   cubic-bezier(0.4, 0, 0.6, 1);
+ 
+    /* ── Z-INDEX ────────────────────────────────────────────────────────────── */
+    --z-background: -1;
+    --z-base:       0;
+    --z-raised:     10;
+    --z-sidebar:    20;
+    --z-sticky:     50;
+    --z-dropdown:   100;
+    --z-popover:    200;
+    --z-overlay:    300;
+    --z-modal:      400;
+    --z-tooltip:    500;
+    --z-toast:      600;
+    --z-command:    700;
+    --z-system:     1000;
+ 
+  } /* :root */
+ 
+  /* ══════════════════════════════════════════════════════════════════════════
+     GLOBAL BASE RULES
+     ══════════════════════════════════════════════════════════════════════════ */
+ 
+  /* Box-sizing reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    border-color: var(--border-default);
+  }
+ 
+  /* Default focus behavior — remove browser default, add our own */
+  :focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+ 
+  /* Our focus ring — keyboard navigation only */
+  :focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: var(--focus-ring);
+  }
+ 
+  /* Reduced motion — respects user system preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+ 
+} /* end @layer base */
+ 
+ 
+/* ══════════════════════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ══════════════════════════════════════════════════════════════════════════════ */
+ 
+@keyframes sellora-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+ 
+@keyframes sellora-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+ 
+@keyframes sellora-slide-in-bottom {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+@keyframes sellora-slide-in-top {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+@keyframes sellora-slide-in-right {
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+ 
+@keyframes sellora-slide-in-left {
+  from { opacity: 0; transform: translateX(-100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+ 
+@keyframes sellora-scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+ 
+@keyframes sellora-scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.96); }
+}
+ 
+@keyframes sellora-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+ 
+@keyframes sellora-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+ 
+@keyframes sellora-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+ 
+@keyframes sellora-bounce-in {
+  0%   { transform: scale(0);    opacity: 0; }
+  60%  { transform: scale(1.1); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+ 
+@keyframes sellora-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+ 
+@keyframes sellora-skeleton {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+ 
+ 
+/* ══════════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ══════════════════════════════════════════════════════════════════════════════ */
+ 
+@layer utilities {
+ 
+  /* ── BORDER RADIUS ───────────────────────────────────────────────────────── */
+  .rounded-none { border-radius: var(--radius-none); }
+  .rounded-xs   { border-radius: var(--radius-xs);   }
+  .rounded-sm   { border-radius: var(--radius-sm);   }
+  .rounded-md   { border-radius: var(--radius-md);   }  /* ← DEFAULT */
+  .rounded-lg   { border-radius: var(--radius-lg);   }
+  .rounded-xl   { border-radius: var(--radius-xl);   }
+  .rounded-2xl  { border-radius: var(--radius-2xl);  }
+  .rounded-3xl  { border-radius: var(--radius-3xl);  }
+  .rounded-full { border-radius: var(--radius-full);  }
+ 
+  /* ── SHADOW UTILITIES ────────────────────────────────────────────────────── */
+  .shadow-none  { box-shadow: var(--shadow-none); }
+  .shadow-xs    { box-shadow: var(--shadow-xs);   }
+  .shadow-sm    { box-shadow: var(--shadow-sm);   }
+  .shadow-md    { box-shadow: var(--shadow-md);   }
+  .shadow-lg    { box-shadow: var(--shadow-lg);   }
+  .shadow-xl    { box-shadow: var(--shadow-xl);   }
+  .shadow-2xl   { box-shadow: var(--shadow-2xl);  }
+  .shadow-3xl   { box-shadow: var(--shadow-3xl);  }
+  .shadow-inner { box-shadow: var(--shadow-inner); }
+ 
+  /* Component shadows */
+  .shadow-card      { box-shadow: var(--shadow-card);     }
+  .shadow-dropdown  { box-shadow: var(--shadow-dropdown); }
+  .shadow-modal     { box-shadow: var(--shadow-modal);    }
+  .shadow-toast     { box-shadow: var(--shadow-toast);    }
+  .shadow-command   { box-shadow: var(--shadow-command);  }
+ 
+  /* ── FOCUS RING UTILITIES ────────────────────────────────────────────────── */
+ 
+  /* Apply to interactive element — shows focus ring on keyboard focus */
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: box-shadow var(--duration-fast) var(--ease-out);
+  }
+  .focus-ring:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+ 
+  .focus-ring-error:focus-visible   { box-shadow: var(--focus-ring-error);   }
+  .focus-ring-success:focus-visible { box-shadow: var(--focus-ring-success); }
+  .focus-ring-warning:focus-visible { box-shadow: var(--focus-ring-warning); }
+  .focus-ring-inset:focus-visible   { box-shadow: var(--focus-ring-inset);   }
+ 
+  /* For elements on colored/dark backgrounds */
+  .focus-ring-on-color:focus-visible { box-shadow: var(--focus-ring-on-color); }
+ 
+  /* ── OPACITY UTILITIES ───────────────────────────────────────────────────── */
+  .opacity-0    { opacity: var(--opacity-0);   }
+  .opacity-5    { opacity: var(--opacity-5);   }
+  .opacity-10   { opacity: var(--opacity-10);  }
+  .opacity-20   { opacity: var(--opacity-20);  }
+  .opacity-30   { opacity: var(--opacity-30);  }
+  .opacity-40   { opacity: var(--opacity-40);  }  /* disabled */
+  .opacity-50   { opacity: var(--opacity-50);  }  /* overlay */
+  .opacity-60   { opacity: var(--opacity-60);  }
+  .opacity-70   { opacity: var(--opacity-70);  }
+  .opacity-80   { opacity: var(--opacity-80);  }
+  .opacity-90   { opacity: var(--opacity-90);  }
+  .opacity-100  { opacity: var(--opacity-100); }
+ 
+  /* ── DISABLED STATE ──────────────────────────────────────────────────────── */
+  .disabled,
+  [disabled],
+  [aria-disabled="true"] {
+    opacity: var(--opacity-40);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+ 
+  /* ── BLUR UTILITIES ──────────────────────────────────────────────────────── */
+  .backdrop-blur-none { backdrop-filter: blur(var(--blur-none)); }
+  .backdrop-blur-xs   { backdrop-filter: blur(var(--blur-xs));   }
+  .backdrop-blur-sm   { backdrop-filter: blur(var(--blur-sm));   }
+  .backdrop-blur-md   { backdrop-filter: blur(var(--blur-md));   }
+  .backdrop-blur-lg   { backdrop-filter: blur(var(--blur-lg));   }
+  .backdrop-blur-xl   { backdrop-filter: blur(var(--blur-xl));   }
+  .backdrop-blur-2xl  { backdrop-filter: blur(var(--blur-2xl));  }
+ 
+  /* ── OVERLAY UTILITIES ───────────────────────────────────────────────────── */
+ 
+  /* Modal backdrop */
+  .overlay-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(3, 7, 18, 0.50);
+    z-index: var(--z-overlay);
+  }
+ 
+  /* Frosted glass overlay */
+  .overlay-frosted {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(var(--blur-lg));
+    z-index: var(--z-overlay);
+  }
+ 
+  /* ── TRANSITION UTILITIES ────────────────────────────────────────────────── */
+ 
+  .transition-hover {
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+ 
+  .transition-focus {
+    transition:
+      box-shadow var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+ 
+  .transition-card {
+    transition:
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+ 
+  .transition-fade {
+    transition: opacity var(--duration-default) var(--ease-out);
+  }
+ 
+  .transition-sidebar {
+    transition:
+      width var(--duration-normal) var(--ease-in-out),
+      transform var(--duration-normal) var(--ease-in-out);
+  }
+ 
+  /* ── Z-INDEX UTILITIES ───────────────────────────────────────────────────── */
+  .z-background { z-index: var(--z-background); }
+  .z-base       { z-index: var(--z-base);       }
+  .z-raised     { z-index: var(--z-raised);     }
+  .z-sidebar    { z-index: var(--z-sidebar);    }
+  .z-sticky     { z-index: var(--z-sticky);     }
+  .z-dropdown   { z-index: var(--z-dropdown);   }
+  .z-popover    { z-index: var(--z-popover);    }
+  .z-overlay    { z-index: var(--z-overlay);    }
+  .z-modal      { z-index: var(--z-modal);      }
+  .z-tooltip    { z-index: var(--z-tooltip);    }
+  .z-toast      { z-index: var(--z-toast);      }
+  .z-command    { z-index: var(--z-command);    }
+ 
+  /* ── ANIMATION UTILITIES ─────────────────────────────────────────────────── */
+ 
+  .animate-fade-in {
+    animation: sellora-fade-in var(--duration-default) var(--ease-out) forwards;
+  }
+ 
+  .animate-fade-out {
+    animation: sellora-fade-out var(--duration-default) var(--ease-in) forwards;
+  }
+ 
+  .animate-scale-in {
+    animation: sellora-scale-in var(--duration-default) var(--ease-out) forwards;
+  }
+ 
+  .animate-slide-in-bottom {
+    animation: sellora-slide-in-bottom var(--duration-slow) var(--ease-out) forwards;
+  }
+ 
+  .animate-slide-in-right {
+    animation: sellora-slide-in-right var(--duration-slow) var(--ease-out) forwards;
+  }
+ 
+  .animate-slide-in-left {
+    animation: sellora-slide-in-left var(--duration-slow) var(--ease-out) forwards;
+  }
+ 
+  .animate-slide-in-top {
+    animation: sellora-slide-in-top var(--duration-default) var(--ease-out) forwards;
+  }
+ 
+  .animate-pulse {
+    animation: sellora-pulse 2s var(--ease-in-out) infinite;
+  }
+ 
+  .animate-spin {
+    animation: sellora-spin 1s linear infinite;
+  }
+ 
+  .animate-ping {
+    animation: sellora-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+ 
+  .animate-bounce-in {
+    animation: sellora-bounce-in var(--duration-very-slow) var(--ease-out) forwards;
+  }
+ 
+  .animate-shake {
+    animation: sellora-shake var(--duration-slow) var(--ease-in-out) forwards;
+  }
+ 
+  /* ── SKELETON LOADER ─────────────────────────────────────────────────────── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #F3F4F6 25%,
+      #E5E7EB 50%,
+      #F3F4F6 75%
+    );
+    background-size: 400% 100%;
+    animation: sellora-skeleton 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+ 
+  /* ── CARD HOVER LIFT ─────────────────────────────────────────────────────── */
+  .card-hover {
+    transition:
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+ 
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+    border-color: var(--border-hover);
+  }
+ 
+  /* ── ISOLATION ───────────────────────────────────────────────────────────── */
+  /* Creates a new stacking context to contain child z-indices */
+  .stacking-context {
+    isolation: isolate;
+  }
+ 
+} /* end @layer utilities */
+ 
