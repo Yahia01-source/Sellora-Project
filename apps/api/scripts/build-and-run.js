@@ -5,7 +5,7 @@ const path = require('path');
 const distMain = path.join(__dirname, '..', 'dist', 'main.js');
 
 console.log('Building...');
-execSync('npx nest build', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+execSync('npx tsc -p tsconfig.app.json', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 
 function waitForFile(filePath, maxAttempts, delayMs) {
   return new Promise((resolve, reject) => {
