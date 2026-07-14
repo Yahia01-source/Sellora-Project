@@ -7,26 +7,60 @@
 
 import { PageHeader } from '@/components/layout/primitives/PageHeader';
 import { ContentContainer } from '@/components/layout/primitives/ContentContainer';
-import { Button } from '@/components/ui/button/Button';
-import { PlusIcon } from 'lucide-react';
+import { KpiGrid } from '@/components/dashboard/KpiGrid';
+import { WelcomeSection } from '@/components/dashboard/WelcomeSection';
+const welcomeData = {
+  userName: 'Abdeladim',
+  storeName: 'Sellora Demo Store',
+  currentDate: new Date().toISOString(),
+  todayOrders: 24,
+  todayRevenue: 842000, // centimes
+  currency: 'MAD',
+  pendingActions: 3,
+};
 
 export default function DashboardPage() {
   return (
     <ContentContainer>
-      <PageHeader
+      {/* <PageHeader
         title="Dashboard"
         description="Overview of your store's performance and recent activity."
-        actions={
-          <Button leftIcon={<PlusIcon className="size-4" />}>
-            Create Order
-          </Button>
-        }
-      />
+      /> */}
 
       {/* Mount point for future dashboard widgets */}
-      <div className="mt-6 border border-dashed border-[var(--color-border)] rounded-[var(--radius-lg)] p-8 text-center text-[var(--color-text-muted)] text-[14px]">
-        Each cell below is an empty mount point for future widgets — the structures are ready.
-      </div>
-    </ContentContainer>
+<div className="space-y-6">
+
+  <WelcomeSection data={welcomeData} />
+
+  <KpiGrid
+    kpis={[]}
+    loading={true}
+  />
+
+  {/* Charts */}
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  <div className="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-6 min-h-[320px]">
+    Sales Chart
+  </div>
+
+  <div className="rounded-xl border border-gray-200 bg-white p-6 min-h-[320px]">
+    Revenue Summary
+  </div>
+
+</div>
+  {/* Recent Orders */}
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  <div className="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-6 min-h-[400px]">
+    Recent Orders
+  </div>
+
+  <div className="rounded-xl border border-gray-200 bg-white p-6 min-h-[400px]">
+    Activity Feed
+  </div>
+
+</div>
+</div> </ContentContainer>
   );
 }

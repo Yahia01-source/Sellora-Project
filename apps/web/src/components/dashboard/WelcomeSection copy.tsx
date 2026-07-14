@@ -130,19 +130,20 @@ export function WelcomeSection({ data }: WelcomeSectionProps) {
   return (
     <div className="flex flex-col gap-5">
       {/* Header row */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <p className="text-[13px] text-[var(--color-text-muted)] mb-1">
-            {formatDate(data.currentDate)}
+      <div className="flex flex-col gap-4">
+        <div className="space-y-1">
+          <p className="text-[13px] text-[var(--color-text-muted)]">
+              {formatDate(data.currentDate)}
           </p>
-          <h1 className="text-[22px] sm:text-[26px] font-bold text-[var(--color-text)] leading-tight tracking-tight">
-            {greeting}, {data.userName} 👋
+
+          <h1 className="text-[28px] font-bold text-[var(--color-text)]">
+              {greeting}, {data.userName} 👋
           </h1>
-          <p className="text-[14px] text-[var(--color-text-secondary)] mt-1">
+
+          <p className="text-[15px] text-[var(--color-text-secondary)]">
             {data.storeName}
           </p>
-        </div>
- 
+        </div> 
         {/* Quick Stats */}
         <div className="flex flex-wrap gap-2">
           <StatPill

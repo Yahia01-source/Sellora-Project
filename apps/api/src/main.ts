@@ -9,7 +9,6 @@ async function bootstrap(): Promise<void> {
     origin: true,
     credentials: true,
   });
-
   app.setGlobalPrefix('api/v1');
 
   const port = process.env.PORT ? Number(process.env.PORT) : 4000;
