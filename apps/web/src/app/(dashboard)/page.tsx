@@ -13,6 +13,8 @@ import { TopProducts } from '@/components/dashboard/TopProducts';
 import type { TopProduct } from '@/components/dashboard/dashboard.types';
 import { RecentOrders } from '@/components/dashboard/RecentOrders';
 import type { RecentOrder } from '@/components/dashboard/dashboard.types';
+import { ActivityFeed } from '@/components/dashboard/ActivityFeed';
+import type { ActivityItem } from '@/components/dashboard/dashboard.types';
 const welcomeData = {
   userName: 'Abdeladim',
   storeName: 'Sellora Demo Store',
@@ -92,6 +94,36 @@ const recentOrdersData: RecentOrder[] = [
     city: 'Fes',
   },
 ];
+const activityData: ActivityItem[] = [
+  {
+    id: '1',
+    type: 'order_placed',
+    title: 'Order #1258 created',
+    description: 'by Ahmed Benali',
+    timestamp: '2 min ago',
+  },
+  {
+    id: '2',
+    type: 'payment_received',
+    title: 'Payment received',
+    description: 'Order #1257',
+    timestamp: '15 min ago',
+  },
+  {
+    id: '3',
+    type: 'customer_added',
+    title: 'New customer registered',
+    description: 'Sara Amrani',
+    timestamp: '28 min ago',
+  },
+  {
+    id: '4',
+    type: 'product_updated',
+    title: 'Product updated',
+    description: 'Rolex Submariner',
+    timestamp: '1 hour ago',
+  },
+];
 export default function DashboardPage() {
   return (
     <ContentContainer>
@@ -134,10 +166,9 @@ export default function DashboardPage() {
     orders={recentOrdersData}
   />
 </div>
-  <div className="rounded-xl border border-gray-200 bg-white p-6 min-h-[400px]">
-    Activity Feed
-  </div>
-
+<ActivityFeed
+  activities={activityData}
+/>
 </div>
 </div> </ContentContainer>
   );
