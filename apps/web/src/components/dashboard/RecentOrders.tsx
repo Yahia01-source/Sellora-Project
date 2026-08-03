@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Widget, Skeleton } from './primitives';
+import { formatCurrency, formatOrderDate } from '@/lib/format';
 import type { RecentOrder } from './dashboard.types';
 import { StatusBadge } from './StatusBadge';
 
@@ -21,6 +22,17 @@ export function RecentOrders({
   footerAction,
 }: RecentOrdersProps) {
   if (loading) return <RecentOrdersSkeleton />;
+  if (orders.length === 0) {
+  return (
+    <Widget>
+      <div className="flex h-64 items-center justify-center">
+        <p className="text-sm text-[var(--color-text-secondary)]">
+          No recent orders.
+        </p>
+      </div>
+    </Widget>
+  );
+}
 
   return (
     <Widget className="flex flex-col gap-4">
@@ -59,25 +71,41 @@ export function RecentOrders({
 
     <tbody>
         {orders.map((order) => (
-        <tr
-            key={order.id}
-            className="border-b border-[var(--color-border)] last:border-0"
-        >
-        <td className="py-4">
-            {order.orderNumber}
-        </td>
+<tr
+  key={order.id}
+  className="
+    border-b
+    border-[var(--color-border)]
+    last:border-0
+    transition-colors
+    duration-200
+    hover:bg-[var(--color-bg-muted)]
+    cursor-pointer
+  "
+>
+<td className="py-4">
+  <span className="font-medium text-[var(--color-text)]">
+    {order.orderNumber}
+  </span>
+</td>
+<td>
+  <div className="flex items-center gap-3">
+    <div className="flex size-8 items-center justify-center rounded-full bg-[var(--color-bg-muted)] text-xs font-semibold text-[var(--color-text-secondary)]">
+      {order.customerName.charAt(0).toUpperCase()}
+    </div>
 
-        <td>
-            {order.customerName}
-        </td>
-
+    <span className="text-[13px] font-medium text-[var(--color-text)]">
+      {order.customerName}
+    </span>
+  </div>
+</td>
 <td>
 <StatusBadge status={order.status} />
 </td><td className="text-[13px] text-[var(--color-text-secondary)]">
     {formatOrderDate(order.createdAt)}
 </td>
         <td className="text-right font-medium">
-            {order.currency} {order.totalAmount}
+           {formatCurrency(order.totalAmount, order.currency)}
         </td>
         </tr>
     ))}
@@ -87,24 +115,6 @@ export function RecentOrders({
       {footerAction}
     </Widget>
   );
-}
-function formatOrderDate(date: string) {
-  const today = new Date();
-  const orderDate = new Date(date);
-
-  const diff =
-    Math.floor(
-      (today.getTime() - orderDate.getTime()) /
-      (1000 * 60 * 60 * 24),
-    );
-
-  if (diff === 0) return 'Today';
-  if (diff === 1) return 'Yesterday';
-
-  return orderDate.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-  });
 }
 
 function RecentOrdersSkeleton() {

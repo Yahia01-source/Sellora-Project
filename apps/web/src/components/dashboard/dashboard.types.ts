@@ -59,6 +59,20 @@ export interface RecentOrder {
   createdAt: string;
   city?: string;
 }
+// alert\\\\\\\\\\\\\\
+export type AlertVariant =
+  | 'warning'
+  | 'success'
+  | 'danger'
+  | 'info';
+
+export interface AlertItem {
+  id: string;
+  title: string;
+  description: string;
+  variant: AlertVariant;
+  href?: string;
+}
 
 // â”€â”€â”€ CUSTOMERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -123,8 +137,21 @@ export interface ActivityItem {
   avatarUrl?: string;
   href?: string;
 }
-
-// â”€â”€â”€ NOTIFICATIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SalesPoint\\\\\\\\\\\\\\
+export interface SalesPoint {
+  label: string;
+  sales: number;
+}
+// RevenueSummaryItem\\\\\\\\\\\\\\\\\ 
+export interface RevenueSummaryItem {
+  id: string;
+  label: string;
+  value: number;
+  progress: number;
+  currency: string;
+  color?: string;
+}
+// â”€â”€â”€ NOTIFICATIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type NotificationSeverity = 'info' | 'success' | 'warning' | 'danger';
 
@@ -208,17 +235,23 @@ export interface AiInsight {
 
 export interface DashboardData {
   welcome: WelcomeData;
-  kpis: KpiCardData[];
-  recentOrders: RecentOrder[];
-  recentCustomers: RecentCustomer[];
-  topProducts: TopProduct[];
-  topCities: TopCity[];
-  activity: ActivityItem[];
-  notifications: SmartNotification[];
-  goals: BusinessGoal[];
-  employees: EmployeePerformance[];
-  charts: ChartConfig[];
-  aiInsights: AiInsight[];
-}
 
+  kpis: KpiCardData[];
+
+  sales: {
+    chart: SalesPoint[];
+    total: number;
+    growth: number;
+  };
+
+  revenueSummary: RevenueSummaryItem[];
+
+  topProducts: TopProduct[];
+
+  recentOrders: RecentOrder[];
+
+  activity: ActivityItem[];
+
+  alerts: AlertItem[];
+}
 export type KpiTrend = TrendDirection;

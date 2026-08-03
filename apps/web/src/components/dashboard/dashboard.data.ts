@@ -1,243 +1,231 @@
+import type {
+    WelcomeData,
+    KpiCardData,
+    TopProduct,
+    RecentOrder,
+    ActivityItem,
+    AlertItem,
+    SalesPoint,
+    RevenueSummaryItem,
+} from './dashboard.types';
 
-/**
- * @file components/dashboard/dashboard.types.ts
- * @description Sellora Dashboard — Complete Type Definitions
- *
- * Single source of truth for every data shape used across the dashboard.
- * Widgets import from here; they never define their own inline interfaces.
- * This enables future API integration to change data shapes in one place.
- */
- 
-// ─── KPI ────────────────────────────────────────────────────────────────────
- 
-export type KpiTrend = 'up' | 'down' | 'neutral';
-export type KpiTone = 'default' | 'success' | 'danger' | 'warning' | 'info';
- 
-export interface KpiCardData {
-  id: string;
-  label: string;
-  value: string | number;
-  /** Formatted display value (e.g. "1,204" or "94.2%") */
-  displayValue: string;
-  /** Percentage change vs prior period (e.g. 12.4) */
-  change?: number;
-  /** Direction of the change */
-  trend?: KpiTrend;
-  /** Context label for the trend (e.g. "vs last 30 days") */
-  trendLabel?: string;
-  tone?: KpiTone;
-  /** Icon component */
-  icon?: React.ReactNode;
-  /** Whether this KPI is currency-based */
-  isCurrency?: boolean;
-  /** Currency code */
-  currency?: string;
-  /** Sparkline data points (last N periods) */
-  sparkline?: number[];
-}
- 
-// ─── ORDERS ──────────────────────────────────────────────────────────────────
- 
-export type OrderStatus =
-  | 'new'
-  | 'pending'
-  | 'confirmed'
-  | 'processing'
-  | 'out_for_delivery'
-  | 'delivered'
-  | 'failed'
-  | 'returned'
-  | 'cancelled';
- 
-export interface RecentOrder {
-  id: string;
-  orderNumber: string;
-  customerName: string;
-  customerAvatar?: string;
-  status: OrderStatus;
-  /** Total in smallest currency unit */
-  totalAmount: number;
-  currency: string;
-  itemCount: number;
-  createdAt: string; // ISO
-  city?: string;
-}
- 
-// ─── CUSTOMERS ───────────────────────────────────────────────────────────────
- 
-export interface RecentCustomer {
-  id: string;
-  name: string;
-  email?: string;
-  phone: string;
-  avatarUrl?: string;
-  totalOrders: number;
-  totalSpent: number;
-  currency: string;
-  lastOrderAt: string; // ISO
-  isNew?: boolean;
-}
- 
-// ─── PRODUCTS ────────────────────────────────────────────────────────────────
- 
-export interface TopProduct {
-  id: string;
-  name: string;
-  sku?: string;
-  imageUrl?: string;
-  unitsSold: number;
-  revenue: number;
-  currency: string;
-  trend: KpiTrend;
-  trendPercent: number;
-  rank: number;
-}
- 
-// ─── CITIES ──────────────────────────────────────────────────────────────────
- 
-export interface TopCity {
-  id: string;
-  name: string;
-  country?: string;
-  orderCount: number;
-  revenue: number;
-  currency: string;
-  /** 0-100 share of total orders */
-  sharePercent: number;
-}
- 
-// ─── ACTIVITY ────────────────────────────────────────────────────────────────
- 
-export type ActivityType =
-  | 'order_placed'
-  | 'order_delivered'
-  | 'order_returned'
-  | 'customer_added'
-  | 'product_added'
-  | 'payment_received'
-  | 'employee_added'
-  | 'store_update'
-  | 'system';
- 
-export interface ActivityItem {
-  id: string;
-  type: ActivityType;
-  title: string;
-  description?: string;
-  timestamp: string; // ISO
-  /** User or entity that triggered the activity */
-  actor?: string;
-  actorAvatar?: string;
-  href?: string;
-  metadata?: Record<string, string | number>;
-}
- 
-// ─── NOTIFICATIONS ────────────────────────────────────────────────────────────
- 
-export type NotificationSeverity = 'info' | 'success' | 'warning' | 'danger';
- 
-export interface SmartNotification {
-  id: string;
-  severity: NotificationSeverity;
-  title: string;
-  description?: string;
-  action?: { label: string; href: string };
-  timestamp: string;
-  read: boolean;
-  /** Whether this notification can be dismissed */
-  dismissible?: boolean;
-}
- 
-// ─── GOALS ───────────────────────────────────────────────────────────────────
- 
-export type GoalStatus = 'on_track' | 'at_risk' | 'behind' | 'completed';
- 
-export interface BusinessGoal {
-  id: string;
-  label: string;
-  current: number;
-  target: number;
-  unit: string; // 'orders', 'MAD', '%', etc.
-  status: GoalStatus;
-  deadline?: string; // ISO
-  icon?: React.ReactNode;
-}
- 
-// ─── EMPLOYEES ───────────────────────────────────────────────────────────────
- 
-export interface EmployeePerformance {
-  id: string;
-  name: string;
-  role: string;
-  avatarUrl?: string;
-  ordersHandled: number;
-  deliveryRate: number; // 0-100
-  avgResponseTime?: string;
-  rating?: number; // 0-5
-}
- 
-// ─── CHART ───────────────────────────────────────────────────────────────────
- 
-export interface ChartDataPoint {
-  label: string;
-  value: number;
-  secondaryValue?: number;
-}
- 
-export type ChartPeriod = '7d' | '30d' | '90d' | '12m';
- 
-export interface ChartConfig {
-  id: string;
-  title: string;
-  description?: string;
-  period: ChartPeriod;
-  data: ChartDataPoint[];
-  type: 'line' | 'bar' | 'area';
-  color?: string;
-  secondaryColor?: string;
-}
- 
-// ─── WELCOME ─────────────────────────────────────────────────────────────────
- 
-export interface WelcomeData {
-  userName: string;
-  storeName: string;
-  /** ISO string */
-  currentDate: string;
-  /** Quick metrics for the welcome section */
-  todayOrders: number;
-  todayRevenue: number;
-  currency: string;
-  pendingActions: number;
-}
- 
-// ─── AI INSIGHTS ─────────────────────────────────────────────────────────────
- 
-export interface AiInsight {
-  id: string;
-  headline: string;
-  body: string;
-  confidence?: number; // 0-100
-  action?: { label: string; href: string };
-  generatedAt: string;
-}
- 
-// ─── DASHBOARD DATA AGGREGATE ────────────────────────────────────────────────
- 
-export interface DashboardData {
-  welcome: WelcomeData;
-  kpis: KpiCardData[];
-  recentOrders: RecentOrder[];
-  recentCustomers: RecentCustomer[];
-  topProducts: TopProduct[];
-  topCities: TopCity[];
-  activity: ActivityItem[];
-  notifications: SmartNotification[];
-  goals: BusinessGoal[];
-  employees: EmployeePerformance[];
-  charts: ChartConfig[];
-  aiInsights: AiInsight[];
-}
- 
-export type DashboardLoadState = 'loading' | 'success' | 'error';
- 
+
+
+export const welcomeData: WelcomeData = {
+    userName: 'Abdeladim',
+    storeName: 'Sellora Demo Store',
+    currentDate: new Date().toISOString(),
+    todayOrders: 24,
+  todayRevenue: 842000, // centimes
+    currency: 'MAD',
+    pendingActions: 3,
+};
+export const kpiData: KpiCardData[] = [
+    {
+    id: 'orders',
+    label: 'Orders',
+    value: 124,
+    displayValue: '124',
+    trend: 'up',
+    change: 12.5,
+    },
+    {
+    id: 'revenue',
+    label: 'Revenue',
+    value: 245000,
+    displayValue: '245,000 MAD',
+    trend: 'up',
+    change: 18.4,
+    isCurrency: true,
+    currency: 'MAD',
+    },
+    {
+    id: 'customers',
+    label: 'Customers',
+    value: 82,
+    displayValue: '82',
+    trend: 'up',
+    change: 6.2,
+    },
+    {
+    id: 'conversion',
+    label: 'Conversion',
+    value: 4.2,
+    displayValue: '4.2%',
+    trend: 'down',
+    change: 1.1,
+    },
+];
+export const topProductsData: TopProduct[] = [
+    {
+    id: '1',
+    name: 'Rolex Submariner',
+    imageUrl: '',
+    unitsSold: 124,
+    revenue: 245000,
+    currency: 'MAD',
+    trend: 'up',
+    trendPercent: 12,
+    rank: 1,
+    },
+    {
+    id: '2',
+    name: 'Casio Vintage',
+    imageUrl: '',
+    unitsSold: 93,
+    revenue: 182000,
+    currency: 'MAD',
+    trend: 'up',
+    trendPercent: 8,
+    rank: 2,
+    },
+    {
+    id: '3',
+    name: 'Tissot PRX',
+    imageUrl: '',
+    unitsSold: 71,
+    revenue: 154000,
+    currency: 'MAD',
+    trend: 'down',
+    trendPercent: 3,
+    rank: 3,
+    },
+];
+export const recentOrdersData: RecentOrder[] = [
+    {
+    id: '1',
+    orderNumber: '#SLR-1001',
+    customerName: 'Ahmed Benali',
+    status: 'confirmed',
+    totalAmount: 450,
+    currency: 'MAD',
+    itemCount: 2,
+    createdAt: '2026-07-15',
+    city: 'Casablanca',
+    },
+    {
+    id: '2',
+    orderNumber: '#SLR-1002',
+    customerName: 'Sara Amrani',
+    status: 'confirmed',
+    totalAmount: 280,
+    currency: 'MAD',
+    itemCount: 1,
+    createdAt: '2026-07-15',
+    city: 'Rabat',
+    },
+    {
+    id: '3',
+    orderNumber: '#SLR-1003',
+    customerName: 'Youssef Alaoui',
+    status: 'delivered',
+    totalAmount: 920,
+    currency: 'MAD',
+    itemCount: 4,
+    createdAt: '2026-07-14',
+    city: 'Fes',
+    },
+];
+export const activityData: ActivityItem[] = [
+    {
+    id: '1',
+    type: 'order_placed',
+    title: 'Order #1258 created',
+    description: 'by Ahmed Benali',
+    timestamp: '2 min ago',
+    },
+    {
+    id: '2',
+    type: 'payment_received',
+    title: 'Payment received',
+    description: 'Order #1257',
+    timestamp: '15 min ago',
+    },
+    {
+    id: '3',
+    type: 'customer_added',
+    title: 'New customer registered',
+    description: 'Sara Amrani',
+    timestamp: '28 min ago',
+    },
+    {
+    id: '4',
+    type: 'product_updated',
+    title: 'Product updated',
+    description: 'Rolex Submariner',
+    timestamp: '1 hour ago',
+    },
+];
+export const alertsData: AlertItem[] = [
+    {
+    id: '1',
+    title: 'Low stock detected',
+    description: 'Rolex Submariner has only 3 items left.',
+    variant: 'warning',
+    },
+    {
+    id: '2',
+    title: 'Today revenue increased',
+    description: 'Revenue is up by 18% compared to yesterday.',
+    variant: 'success',
+    },
+    {
+    id: '3',
+    title: 'Payment verification required',
+    description: 'One payment needs manual review.',
+    variant: 'info',
+    },
+];
+export const salesData: SalesPoint[] = [
+    { label: 'Mon', sales: 12 },
+    { label: 'Tue', sales: 18 },
+    { label: 'Wed', sales: 9 },
+    { label: 'Thu', sales: 22 },
+    { label: 'Fri', sales: 31 },
+    { label: 'Sat', sales: 40 },
+    { label: 'Sun', sales: 28 },
+];
+export const revenueSummaryData: RevenueSummaryItem[] = [
+  {
+    id: 'today',
+    label: 'Today',
+    value: 8420,
+    progress: 68,
+    currency: 'MAD',
+  },
+  {
+    id: 'week',
+    label: 'This Week',
+    value: 52300,
+    progress: 82,
+    currency: 'MAD',
+  },
+  {
+    id: 'month',
+    label: 'This Month',
+    value: 245000,
+    progress: 95,
+    currency: 'MAD',
+  },
+  {
+    id: 'average',
+    label: 'Average Order',
+    value: 680,
+    progress: 54,
+    currency: 'MAD',
+  },
+];
+export const dashboardData = {
+  welcome: welcomeData,
+  kpis: kpiData,
+  sales: {
+    chart: salesData,
+    total: 245000,
+    growth: 18.4,
+  },
+  topProducts: topProductsData,
+  recentOrders: recentOrdersData,
+  activity: activityData,
+  alerts: alertsData,
+  revenueSummary: revenueSummaryData,
+};

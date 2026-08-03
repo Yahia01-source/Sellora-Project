@@ -141,14 +141,14 @@ export function ActivityFeed({
         {title}
       </h3>
 
-      <div>
-        {activities.map((activity) => (
-          <ActivityRow
-            key={activity.id}
-            activity={activity}
-          />
-        ))}
-      </div>
+<div className="flex flex-col">
+  {activities.map((activity) => (
+    <ActivityRow
+      key={activity.id}
+      activity={activity}
+    />
+  ))}
+</div>
     </Widget>
   );
 }
