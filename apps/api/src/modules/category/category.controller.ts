@@ -27,27 +27,41 @@ create(
   @Req() req: any,
   @Body() dto: CreateCategoryDto,
 ) {
-  return this.categoryService.create(req.user.sub, dto);
+   console.log(req.user);
+  return this.categoryService.create(req.user.id, dto);
 }
 @Get()
-findAll(@Query() query: QueryCategoryDto) {
-  return this.categoryService.findAll(query);
+@UseGuards(JwtAuthGuard)
+findAll(
+  @Req() req: any,
+  @Query() query: QueryCategoryDto,
+) {
+  return this.categoryService.findAll(req.user.id, query);
+} 
+@Get(':id')
+@UseGuards(JwtAuthGuard)
+findOne(
+  @Req() req: any,
+  @Param('id') id: string,
+) {
+  return this.categoryService.findOne(req.user.id, id);
 }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(id);
-  }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() dto: UpdateCategoryDto,
-  ) {
-    return this.categoryService.update(id, dto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoryService.remove(id);
-  }
+@Patch(':id')
+@UseGuards(JwtAuthGuard)
+update(
+  @Req() req: any,
+  @Param('id') id: string,
+  @Body() dto: UpdateCategoryDto,
+) {
+  return this.categoryService.update(req.user.id, id, dto);
+}
+@Delete(':id')
+@UseGuards(JwtAuthGuard)
+remove(
+  @Req() req: any,
+  @Param('id') id: string,
+) {
+  return this.categoryService.remove(req.user.id, id);
+}
 }

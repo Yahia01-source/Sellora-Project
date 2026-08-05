@@ -24,7 +24,7 @@ create(
   @Req() req: any,
   @Body() dto: CreateStoreDto,
 ) {
-  return this.storeService.create(req.user.sub, dto);
+  return this.storeService.create(req.user.id, dto);
 }
   @Get()
   findAll() {
