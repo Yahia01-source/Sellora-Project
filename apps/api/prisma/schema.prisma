@@ -57,6 +57,7 @@ model Store {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   categories   Category[]
+  products     Product[]
   owner        User        @relation("StoreOwner", fields: [ownerId], references: [id])
   users        User[]      @relation("StoreUsers")
 
@@ -94,12 +95,42 @@ model Category {
   storeId     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  store        Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  products     Product[]
 
   @@index([storeId])
   @@map("categories")
 }
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String
+  description String?
+  sku         String?
+  barcode     String?
 
+  price       Decimal
+  cost        Decimal?
+
+  stock       Int       @default(0)
+  isActive    Boolean   @default(true)
+
+  storeId     String
+  categoryId  String
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  store        Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category     Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([storeId])
+  @@index([categoryId])
+  @@unique([storeId, slug])
+
+  @@map("products")
+}
 enum UserRole {
   SUPER_ADMIN
   STORE_OWNER

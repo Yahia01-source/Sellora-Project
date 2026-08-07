@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { CategoryModule } from './modules/category/category.module';
 import { StoreModule } from './modules/store/store.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
     DashboardModule,
     CategoryModule,
     AuthModule,
+    ProductModule,
   ],
   controllers: [AppController],
 })
