@@ -56,10 +56,14 @@ model Store {
   ownerId      String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  categories   Category[]
-  products     Product[]
-  owner        User        @relation("StoreOwner", fields: [ownerId], references: [id])
-  users        User[]      @relation("StoreUsers")
+
+  categories Category[]
+  products   Product[]
+  customers  Customer[]
+  orders     Order[]
+
+  owner User   @relation("StoreOwner", fields: [ownerId], references: [id])
+  users User[] @relation("StoreUsers")
 
   @@index([ownerId])
   @@map("stores")
@@ -96,41 +100,146 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  store        Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  products     Product[]
+  store    Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  products Product[]
 
   @@index([storeId])
   @@map("categories")
 }
+
 model Product {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   slug        String
   description String?
   sku         String?
   barcode     String?
 
-  price       Decimal
-  cost        Decimal?
+  price Decimal
+  cost  Decimal?
 
-  stock       Int       @default(0)
-  isActive    Boolean   @default(true)
+  stock    Int     @default(0)
+  isActive Boolean @default(true)
 
-  storeId     String
-  categoryId  String
+  storeId    String
+  categoryId String
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  store        Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  category     Category  @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  store    Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
+  inventoryMovements InventoryMovement[]
+  orderItems         OrderItem[]
+
+  @@unique([storeId, slug])
   @@index([storeId])
   @@index([categoryId])
-  @@unique([storeId, slug])
-
   @@map("products")
 }
+
+model Customer {
+  id String @id @default(uuid())
+
+  firstName String
+  lastName  String?
+  phone     String
+  email     String?
+
+  address String?
+  city    String?
+
+  isActive Boolean @default(true)
+
+  storeId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  store  Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@index([storeId])
+  @@index([phone])
+  @@index([isActive])
+  @@map("customers")
+}
+model Order {
+  id          String @id @default(uuid())
+  orderNumber String @unique
+
+  customerId String
+  storeId    String
+
+  status OrderStatus @default(PENDING)
+
+  subtotal Decimal
+  shipping Decimal @default(0)
+  total    Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customer Customer    @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  store    Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  items    OrderItem[]
+
+  @@index([customerId])
+  @@index([storeId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+
+  orderId   String
+  productId String
+
+  quantity  Int
+  unitPrice Decimal
+  total     Decimal
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model InventoryMovement {
+  id        String                @id @default(uuid())
+  productId String
+  type      InventoryMovementType
+  quantity  Int
+  reason    String?
+
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([type])
+  @@map("inventory_movements")
+}
+
+enum InventoryMovementType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
 enum UserRole {
   SUPER_ADMIN
   STORE_OWNER

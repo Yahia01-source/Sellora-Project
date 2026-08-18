@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from 'recharts';
 
-import { useState } from 'react';
 
 import { BarChart3 } from 'lucide-react';
 
@@ -64,8 +63,13 @@ interface SalesChartProps {
 
   totalSales?: number;
   growth?: number;
-}
-const PERIODS = ['7D', '30D', '90D'] as const;
+
+  period: '7D' | '30D' | '90D';
+
+  onPeriodChange: (
+    period: '7D' | '30D' | '90D',
+  ) => void;
+}const PERIODS = ['7D', '30D', '90D'] as const;
 function SalesChartSkeleton() {
   return (
     <Widget>
@@ -88,8 +92,9 @@ export function SalesChart({
   loading,
   totalSales = 0,
   growth = 0,
+  period,
+  onPeriodChange,
 }: SalesChartProps) {
-  const [period, setPeriod] = useState<'7D' | '30D' | '90D'>('7D');
 
 
   if (loading) return <SalesChartSkeleton />;
@@ -123,7 +128,11 @@ export function SalesChart({
     </h3>
 
     <p className="mt-1 text-[13px] text-[var(--color-text-secondary)]">
-      Sales during the last 7 days
+      Sales during the last {period === '7D'
+  ? '7 days'
+  : period === '30D'
+    ? '30 days'
+    : '90 days'}
     </p>
   </div>
 
@@ -131,7 +140,7 @@ export function SalesChart({
   {PERIODS.map((item) => (
     <button
       key={item}
-      onClick={() => setPeriod(item)}
+      onClick={() => onPeriodChange(item)}
       className={`
         rounded-lg
         px-3

@@ -16,15 +16,6 @@
  
 import { useState, useEffect, useCallback } from 'react';
  
-function isEditableTarget(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName;
-  return (
-    tag === 'INPUT' ||
-    tag === 'TEXTAREA' ||
-    target.isContentEditable
-  );
-}
  
 export function useCommandPalette() {
   const [open, setOpen] = useState(false);

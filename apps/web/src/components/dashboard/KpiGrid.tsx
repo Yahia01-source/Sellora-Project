@@ -100,7 +100,6 @@ function KpiCardSkeleton() {
  
 // ─── KPI GRID ────────────────────────────────────────────────────────────────
  
-type KpiGridItem = KpiCardData | { id: string };
 
 interface KpiGridProps {
   kpis: KpiCardData[];

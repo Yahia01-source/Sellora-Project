@@ -1,1 +1,8 @@
-export const filterNavByRole = (items: any[], roles: string[]) => items; export const resolveUserRoles = (user: any) => [];
+export const filterNavByRole = <T>(
+  items: T[],
+  _roles: string[],
+): T[] => items;
+
+export const resolveUserRoles = (
+  _user: unknown,
+): string[] => [];

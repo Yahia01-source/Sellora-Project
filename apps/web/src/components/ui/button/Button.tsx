@@ -89,7 +89,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
  
       // Loading state
       loading = false,
-      loadingText = 'Loading...',
       loadingPlacement = 'replace',
       spinner,
  
@@ -116,7 +115,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // ── DERIVED STATE ─────────────────────────────────────────────────────────
  
     const isDisabled = disabled || loading;
-    const showSpinner = loading;
  
     // Which spinner to render
     const spinnerElement = spinner ?? (

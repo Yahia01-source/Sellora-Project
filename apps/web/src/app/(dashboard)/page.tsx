@@ -2,27 +2,34 @@
  * @file app/(dashboard)/dashboard/page.tsx
  * @description Sellora — Example Page Using Shell Layout Primitives
  */
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 
-import { PageHeader } from '@/components/layout/primitives/PageHeader';
 import { ContentContainer } from '@/components/layout/primitives/ContentContainer';
 import { KpiGrid } from '@/components/dashboard/KpiGrid';
 import { WelcomeSection } from '@/components/dashboard/WelcomeSection';
 import { TopProducts } from '@/components/dashboard/TopProducts';
-import type { TopProduct } from '@/components/dashboard/dashboard.types';
 import { RecentOrders } from '@/components/dashboard/RecentOrders';
-import type { RecentOrder } from '@/components/dashboard/dashboard.types';
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed';
-import type { ActivityItem } from '@/components/dashboard/dashboard.types';
 import { Alerts } from '@/components/dashboard/Alerts';
-import type { AlertItem } from '@/components/dashboard/dashboard.types';
-import { SalesChart } from '@/components/dashboard/SalesChart';
 ;
+
 import { RevenueSummary } from '@/components/dashboard/RevenueSummary';
 import { getDashboard } from '@/services/dashboard.service';
+
+import { DashboardClient } from '@/components/dashboard/DashboardClient';
+
 export default async function DashboardPage() {
-  const data = await getDashboard();
-  
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get('accessToken')?.value;
+
+  if (!token) {
+   redirect('/auth/login');
+  }
+
+  const data = await getDashboard(token);  
   return (
     <ContentContainer>
       {/* <PageHeader
@@ -41,16 +48,12 @@ export default async function DashboardPage() {
 />
   {/* Charts */}
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
 <div className="lg:col-span-2">
-  <SalesChart
-    data={data.sales.chart}
-    totalSales={data.sales.total}
-    growth={data.sales.growth}
-    loading={false}
+  <DashboardClient
+    initialData={data}
+    token={token}
   />
-</div>
-  <div className="rounded-xl border border-gray-200 bg-white p-6 min-h-[320px]">
+</div>  <div className="rounded-xl border border-gray-200 bg-white p-6 min-h-[320px]">
 <RevenueSummary
   data={data.revenueSummary}
   loading={false}

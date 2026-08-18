@@ -164,8 +164,10 @@ export function CommandPalette({ open, onClose, onQueryChange }: CommandPaletteP
           ) : (
             <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
               <p className="text-[13px] text-[var(--color-text-muted)]">
-                No results for <span className="font-medium text-[var(--color-text)]">"{query}"</span>
-              </p>
+              No results for{' '}
+              <span className="font-medium text-[var(--color-text)]">
+                        &quot;{query}&quot;
+</span>              </p>
             </div>
           )}
         </div>

@@ -21,7 +21,7 @@ function WorkspaceAvatar({ workspace, size = 'md' }: { workspace: Workspace; siz
   );
 }
 
-export function WorkspaceSwitcher({ workspaces, activeWorkspaceId, onSwitch, onCreateNew }: WorkspaceSwitcherProps) {
+export function WorkspaceSwitcher({ workspaces, activeWorkspaceId, onSwitch:_onSwitch, onCreateNew:_onCreateNew }: WorkspaceSwitcherProps) {
   const { state, isMobile } = useSidebar();
   const collapsed = !isMobile && state === 'collapsed';
   const [isOpen, setIsOpen] = useState(false);
